@@ -22,7 +22,7 @@
 4. Move `requirements.txt` to your home directory. or /home/pi
 5. Run the following command, substituting `${KLIPPY_ENV}` with the Klippy Virtual Environment bin directory:
 
-## Please Be patient, this install can take up to 15 minutes.  So let it run for awhile.
+## Please Be patient, the install process can take up to 15 minutes.  So let it run for a while.
 
 ```
 ${KLIPPY_ENV}/pip install -r ${HOME}/requirements.txt
