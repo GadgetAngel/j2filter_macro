@@ -105,6 +105,8 @@ It is easier to tell that I am using a python dictionary object where the functi
 1. work on the "install script"
 2. add the ability to update via moonraker ``[update_manager]`` section
 
+URL for moonraker ``[update_manager]`` section can be found (here)[https://moonraker.readthedocs.io/en/latest/configuration/#update_manager]
+
 ---
 
 ### **Defaults**
