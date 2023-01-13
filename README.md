@@ -100,6 +100,13 @@ G0 X{position.x} Y{position.y} Z{position.z} F{position.f}
 It is easier to tell that I am using a python dictionary object where the function call is very hard to tell what is going on.
 
 ---
+### Things that still need to be done:
+
+1. work on the "install script"
+2. add the ability to update via moonraker ``[update_manager]`` section
+
+---
+
 ### **Defaults**
 
 `extended_macro` comes with many default functions which do not need to be added or declared by the user. These include:
