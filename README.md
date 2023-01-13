@@ -100,7 +100,7 @@ G0 X{position.x} Y{position.y} Z{position.z} F{position.f}
 It is easier to tell that I am using a python dictionary object where the function call is very hard to tell what is going on.
 
 ---
-**Defaults**
+### **Defaults**
 
 `extended_macro` comes with many default functions which do not need to be added or declared by the user. These include:
 
