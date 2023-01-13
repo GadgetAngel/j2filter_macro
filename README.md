@@ -54,7 +54,7 @@ See the example folder or example2 folder for more guidance.
 
 ---
 
-### Defining the extended_template section for Klipper
+### Defining the ``[extended_template]`` section for Klipper
 
 The following items will be needed in [extended_template] of your klipper printer.cfg file:
 
