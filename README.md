@@ -71,6 +71,7 @@ The following parameters will be needed:
 path  - the path to your yaml file (the path to the python code and the name you will be using inside klipper)
 jinja2_function - (True,False) set to True if you want to use the python code as a function call and invoke by using two curly braces, otherwise set to False; default is True
 jinja2_filter- (True,False) set to True if you want to use the python code as a filter and invoke with the '|' character, otherwise set to False; default is False
+``
 ---
 
 When defining the macro, use `extended_macro` as the config name instead of `gcode_macro`. To use your function, you will wrap the name with curly brackets (`{gcode_function_name_goes_here}`) if you want to use it as a function call.
