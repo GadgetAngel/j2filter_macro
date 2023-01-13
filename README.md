@@ -18,7 +18,7 @@
     * Klipper Extras: Usually located at `/home/USER/klipper/klippy/extras`.
     * Klippy Virtual Environment `bin` directory: Usually located at `/home/USER/klippy-env/bin`
 2. Clone this repository or download `extended_macro.py`, `extended_template.py`, and `requirements.txt`
-3. Move `extended_macro.py` and `extended_template.py` to your Klipper Extras folder. 
+3. Move `extended_macro.py` and `extended_template.py` to your Klipper Extras folder.
 4. Move `requirements.txt` to your home directory. or /home/pi
 5. Run the following command, substituting `${KLIPPY_ENV}` with the Klippy Virtual Environment bin directory:
 
@@ -52,6 +52,27 @@ or
 
 See the example folder or example2 folder for more guidance.
 
+---
+## Defining the extended_template section for Klipper
+
+The following items will be needed in [extended_template] of your klipper printer.cfg file:
+
+``
+[extended_template]
+# Extended_template is used to define the path to your Function Config
+path: /home/pi/klipper_config/ACTIVE/CONFIG/KLIPPER_FUNCTIONS/function_config.yaml
+jinja2_function: True
+jinja2_filter: True
+``
+
+The following parameters will be needed:
+
+``
+path  - the path to your yaml file (the path to the python code and the name you will be using inside klipper)
+jinja2_function - (True,False) set to True if you want to use the python code as a function call and invoke by using two curly braces, otherwise set to False; default is True
+jinja2_filter- (True,False) set to True if you want to use the python code as a filter and invoke with the '|' character, otherwise set to False; default is False
+---
+
 When defining the macro, use `extended_macro` as the config name instead of `gcode_macro`. To use your function, you will wrap the name with curly brackets (`{gcode_function_name_goes_here}`) if you want to use it as a function call.
 
 I found that when using my function as a function call was awkward.  I prefer to use my function as a jinja2 custom filter.
@@ -65,7 +86,7 @@ My code ended up looking like the following when using my python function as a f
 G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f}
 ``
 
-By using my python function as a custom jinja2 filter I could now write the macro as follows:
+By using my python function as a custom jinja2 filter I could now write the macro by using the pipe character '|' as follows:
 
 ``
 {% set position = params.LIT %}

@@ -5,11 +5,11 @@ import os, yaml, imp
 import math, pandas, numpy, datetime, itertools, collections
 
 # DEFAULTS
-# The default imports to be loaded by extended_template. 
+# The default imports to be loaded by extended_template.
 # These do not need to be defined by the user in their config file
 # If there is a name collision, the default imports will be given priority
 # while the user defined functions are renamed with an underscore.
-# 
+#
 # For example, if the user were to define their own function named `list` (the same name as a default below),
 # the user defined `list` will be renamed to `_list`.
 DEFAULTS = {
@@ -48,14 +48,14 @@ class YamlLoader():
 
         with open(yaml_path, 'r') as f:
             self.yaml = yaml.load(f, Loader=yaml.Loader)
-        
+
         func_yaml = self.yaml.get('functions',None)
         self._funcs = self._import_function_dict(func_yaml)
 
     # Loops through each item in the config, passes
     # the data off to _import_function which will return
     # the actual function if it exists, and then adds
-    # each function to the function dictionary so they can 
+    # each function to the function dictionary so they can
     # be added by extended_macro to the Jinja environment
 
     def GetFunctions(self):
@@ -104,9 +104,17 @@ class PythonFunction:
         self.printer = self.config.get_printer()
         self.gcode = self.printer.lookup_object('gcode')
         self.Log = Logger(config)
-        
+
         self.config_path = config.get('path', None)
+
+        #setup flags so user has a choice to how they want to use the python functions
+        jfunction = config.getboolean('jinja2_function', True)
+        jfilter = config.getboolean('jinja2_filter', False)
+
         self.Functions = self._import()
+
+        self.J2func = jfunction
+        self.J2filter = jfilter
 
     def _import(self):
         defaults_loaded = False
@@ -134,7 +142,6 @@ class PythonFunction:
         print(all_funcs)
         return all_funcs
 
-        
     def _get_loader(self, ext):
         loader = None
         for l in LOADERS:
@@ -159,7 +166,7 @@ class PythonFunction:
     def _load_defaults(self):
         loader = self._get_loader('default')
         return self._load_functions(loader)
-        
+
     def _load_functions(self, loader, config_path = None):
         result = loader(config_path, self.config)
         funcs = result.GetFunctions()
@@ -168,7 +175,7 @@ class PythonFunction:
         return funcs, defaults_loaded
 
     def _insert_function(self, func_name, func):
-        if func_name in self.Functions: 
+        if func_name in self.Functions:
             func_name = '_%s' % func_name
 
 def load_config(config):
@@ -176,35 +183,35 @@ def load_config(config):
 
 # LOADERS
 # The definitions in this list will be used to determine the proper loader for the extensions given
-# 
-# Since different loaders might need or want different methods of parsing the file, 
+#
+# Since different loaders might need or want different methods of parsing the file,
 # the script expects that the loader is a function, not a class. The function should
 # process the config file and return a dictionary with the jinja function name as the key
 # and the actual Python function as the value
-# 
+#
 # The loader for DEFAULTS should be defined with an extension of ['default']
 # This loader will be ignored if the property loader.DefaultsLoaded property is true (see below)
-# 
+#
 # Definition: {'extensions': <collection_or_string>, 'loader': <class>}
-# 
-# Arguments received: 
+#
+# Arguments received:
 #   * config_path: Path to config set in [extended_template]
 #   * config: Config object received from Klipper
 #
 # Required Properties and Functions:
 #   * loader.DefaultsLoaded <property>: <bool>
-#       - If True, it is assumed the loader has loaded the defaults listed below. 
+#       - If True, it is assumed the loader has loaded the defaults listed below.
 #       - If False, assumes the loader has not loaded the defaults listed below.
 #       - It is suggested that the Loader should never process defaults unless:
 #           * The user defines the defaults in the config file
 #           * The loader defines it's own defaults
 #           * Any other scenario where it's better to load the defaults by the loader instead of separately
-#   * loader.GetFunctions(self) <function> = <dict> 
+#   * loader.GetFunctions(self) <function> = <dict>
 #       - Loads user-defined functions.
-#           * Optionally, 
+#           * Optionally,
 #       - Returns schema: {defined_function_name_for_jinja <str>: function <callable>}
-# 
-# 
+#
+#
 LOADERS = [
     {
         'extensions': ['yaml','yml'],
