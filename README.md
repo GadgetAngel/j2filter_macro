@@ -54,7 +54,7 @@ See the example folder or example2 folder for more guidance.
 
 ---
 
-## Defining the extended_template section for Klipper
+### Defining the extended_template section for Klipper
 
 The following items will be needed in [extended_template] of your klipper printer.cfg file:
 
@@ -70,9 +70,9 @@ jinja2_filter: True
 The following parameters will be needed:
 
 ```
-path  - the path to your yaml file (the path to the python code and the name you will be using inside klipper)
-jinja2_function - (True,False) set to True if you want to use the python code as a function call and invoke by using two curly braces, otherwise set to False; default is True
-jinja2_filter- (True,False) set to True if you want to use the python code as a filter and invoke with the '|' character, otherwise set to False; default is False
+path                 - the path to your yaml file (the path to the python code and the name you will be using inside klipper)
+jinja2_function      - (True,False) set to True if you want to use the python code as a function call and invoke by using two curly braces, otherwise set to False; default is True
+jinja2_filter        - (True,False) set to True if you want to use the python code as a filter and invoke with the '|' character, otherwise set to False; default is False
 ```
 ---
 
