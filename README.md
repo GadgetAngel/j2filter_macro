@@ -1,19 +1,36 @@
-# extended_macro
+# J2FILTER_MACRO (use to be extended_macro) but the authors decided to separate the two project.
 ---
-* Allow the use of custom Python functions in your Klipper macros by defining the functions in a YAML config file
-* By default includes many additional modules and functions. See below for more information.
-* Functions can accept parameters and return values to the macro.
+* When `[j2filter_macro]` section appears in your printer.cfg file the ability to add your own python code to 
+* a Klipper macro will be available
+*
+* Allow the use of custom Python functions in your Klipper macros by defining the filters in a YAML config file
+*
+* By default, includes many additional modules and functions. See below for more information.
+*
+* Functions can accept parameters and return values to the macro. 
+*
+* Filters will process the variable to the left of the pipe symbol `(|)`
 *
 * Original work for this was done by @droans at https://github.com/droans/klipper_extras/tree/v0.2/extended_macro
 *
 * My contribution was to add the ability to turn your python code into a custom Jinja2 filter that can be used
 * within the Klipper Jinja2 template engine
+*
+* I have also enabled the ability to use your python code (either use as a function or custom Jinja2 filter) within 
+* gcode that runs on a timer event or `[delayed_gcode]`. To set this up see below
 
-### WARNING:
+---
+
+## **:exclamation: WARNING: :exclamation:**
 
 **Do not blindly download Python scripts, both for use in your macros and this script itself.** Read the script and ensure you understand what is going on. The scripts can be powerful and useful, but they can also be dangerous. If the script looks questionable, dangerous, or too confusing, it's better to assume that it is malicious.
 
-**Installation:**
+---
+
+## **Installation:**
+
+You have two ways you can install this extension (manually or via an install script)
+
 1. Write down the location of the following directories:
     * Klipper Extras: Usually located at `/home/USER/klipper/klippy/extras`.
     * Klippy Virtual Environment `bin` directory: Usually located at `/home/USER/klippy-env/bin`
