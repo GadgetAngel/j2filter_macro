@@ -68,7 +68,9 @@ or
 ~/klippy-env/bin/pip install -r /home/pi/requirements.txt
 ```
 
-Here is the installation script method:
+## Here is the installation script method:
+
+### First you must install the additional software packages
 
 Perform the following commands at your Raspberry Pi command prompt:
 
@@ -86,6 +88,9 @@ or
 ```
 >:point_up: NOTE: Please Be patient, the installation process can take up to 15 minutes.  So let it run for a while.
 
+---
+
+### Now Install the `j2filter_macro` extension for Klipper
 
 2. Install the `j2filter_macro` extension to Klipper, please run the following commands:
 ```BASH
@@ -99,7 +104,7 @@ git clone https://github.com/GadgetAngel/j2filter_macro.git
 ```
 
 ---
-**Setup:**
+## **How to Setup and use the `j2filter_macro` extension for Klipper:**
 
 1. In your Klipper config, add the following section:
 ```python
