@@ -342,7 +342,7 @@ Now you need to use the above python code files inside a Klipper macro.  Example
 
 Example2 uses a regular `gcode_macro` file to call a `j2filter_macro` section.  The calling macro's name is `TEST_CALL_PARK` which calls the `j2filter_macro PARK_DICT` named `PARK_DICT`.
 
-`PARK_DICT` will accept a string that has the X, Y, Z, F park coordinates and Feed rate in a python dictionary object.  But Klipper only sends strings to other macros (via the commandline), unless you use a global variable area.  I want to see if I could get a Klipper macro to accept a python dictionary variable as a parameter on the command line.  To accomplish this I needed a custom jinja2 filter, so I could convert the string back into a python dictionary object.  I could not find any other way of performing this task.
+`PARK_DICT` will accept a string that has the X, Y, Z, F park coordinates and Feed rate in a python dictionary object.  But Klipper only sends strings to other macros (via the command-line), unless you use a global variable area.  I want to see if I could get a Klipper macro to accept a python dictionary variable as a parameter on the command line.  To accomplish this I needed a custom jinja2 filter, so I could convert the string back into a python dictionary object.  I could not find any other way of performing this task.
 
 So I wrote two different ways of converting a string into a python dictionary object.  `strjson_to_dict.py` uses a JSON library call to convert the string.  The problem with this is if you use single quotes around the key name the JSON library will not consider the string a valid JSON string.
 
