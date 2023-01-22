@@ -104,7 +104,7 @@ git clone https://github.com/GadgetAngel/j2filter_macro.git
 ```
 
 ---
-## **How to Setup and use the `j2filter_macro` extension for Klipper:**
+## **How to Set up and use the `j2filter_macro` extension for Klipper:**
 
 1. In your Klipper config, add the following section:
 ```python
@@ -145,7 +145,7 @@ Yes, you can have the same function used as both a Klipper custom function and a
 :bulb: It is the user's responsibility not to overwrite predefined Jinja2 Filters!  There is nothing to check if the user is trying to create a filter name that already exists in Jinja2 unless it is built into the Jinja2 language already.
 
 ---
-**Example1 Usage: An Example of using your python code as a Klipper custom function**
+## **Example1 Usage: An Example of using your python code as a Klipper custom function**
 
 First you must create the `[j2filter_template]` section in your printer.cfg file so Klipper knows to load the `j2filter_template.py` file and include it into the Klipper code running on your Raspberry Pi.
 
@@ -230,11 +230,12 @@ You can have local variables defined via ``variable_name:`` and you can use `des
 
 If you want to use this code inside a timer event you can replace `j2filter_macro` with `delayed_j2filter`.  So just like you use `[delayed_gcode macro_name]` you would use `[delayed_j2filter macro_name]`.
 
-### Using `delayed_j2filter` section
+## Using `delayed_j2filter` section
+
 With delayed Gcode the macro name should be in lower case lettering.  Also, you can not have a `description:` option or have local variables defined in a `delayed_gcode` or `delayed_j2filter` macro definition.  The same rules that apply for `delayed_gcode` apply for `delayed_j2filter`.  The difference between the two is that you can have a Klipper custom function or a custom jinja2 filter inside a `delayed_j2filter` section, but you can not use them inside a `delayed_gcode` section.
 ---
 
-**Example2 Usage: An Example of using your python code as a Custom Jinja2 Filter**
+## **Example2 Usage: An Example of using your python code as a Custom Jinja2 Filter**
 
 First you must create the `[j2filter_template]` section in your printer.cfg file so Klipper knows to load the `j2filter_template.py` file and include it into the Klipper code running on your Raspberry Pi.
 
@@ -535,7 +536,7 @@ G0 X{position.x} Y{position.y} Z{position.z} F{position.f}
 It is easier to tell that I am using a python dictionary object where the Klipper custom function call is very hard to tell what is going on.
 
 ---
-### Moonraker Update Manager:
+## Moonraker Update Manager:
 
 It's possible to keep this extension up to date with the Moonraker's update manager by adding this configuration block to the "moonraker.conf" of your printer:
 
