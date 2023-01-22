@@ -230,9 +230,10 @@ You can have local variables defined via ``variable_name:`` and you can use `des
 
 If you want to use this code inside a timer event you can replace `j2filter_macro` with `delayed_j2filter`.  So just like you use `[delayed_gcode macro_name]` you would use `[delayed_j2filter macro_name]`.
 
-### Using `delayed_j2filter` section
+### Using [delayed_j2filter macro_name] section
 
 With delayed Gcode the macro name should be in lower case lettering.  Also, you can not have a `description:` option or have local variables defined in a `delayed_gcode` or `delayed_j2filter` macro definition.  The same rules that apply for `delayed_gcode` apply for `delayed_j2filter`.  The difference between the two is that you can have a Klipper custom function or a custom jinja2 filter inside a `delayed_j2filter` section, but you can not use them inside a `delayed_gcode` section.
+
 ---
 
 ### **Example2 Usage: An Example of using your python code as a Custom Jinja2 Filter**
