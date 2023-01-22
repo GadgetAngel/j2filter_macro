@@ -13,23 +13,23 @@ If you use your python code as a filter inside a Klipper macro, let's call it a 
 
 ---
 * When `[j2filter_macro]` section appears in your printer.cfg file the ability to add your own python code to
-* a Klipper macro will be available.
-*
-* Allow the use of custom Python code in your Klipper macros by defining the `filters` parameter in a YAML config file.
-*
+ a Klipper macro will be available.
+
+* Allow the user of custom Python code in your Klipper macros by defining the `filters` parameter in a YAML config file.
+
 * By default, includes many additional modules and functions. Look at the end of this README file, for more information.
-*
+
 * Functions can accept parameters and return values to the macro.
-*
+
 * Filters will process the variable to the left of the pipe symbol `(|)`
-*
+
 * Original work for this was done by @droans at https://github.com/droans/klipper_extras/tree/v0.2/extended_macro
-*
+
 * My contribution was to add the ability to turn your python code into a custom Jinja2 filter that can be used
-* within the Klipper Jinja2 template engine.
-*
+ within the Klipper Jinja2 template engine.
+
 * I have also enabled the ability to use your python code (either used as a "Klipper custom function" or as a "custom
-* jinja2 filter") within Gcode that runs on a timer event or `[delayed_gcode]`.
+ jinja2 filter") within Gcode that runs on a timer event or `[delayed_gcode]`.
 
 ---
 
