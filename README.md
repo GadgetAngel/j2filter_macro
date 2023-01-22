@@ -503,7 +503,7 @@ gcode:
     _general_Debug msg="delayed_park_dict - entering"
    #{% set position = '{"x": 150.0, "y": 20.0, "z": 50.0, "f": 4000.0}' %}
    {% set position = "{'x': 250, 'y': 50, 'z': 70, 'f': 4000.0}" %}
-   {% set position = position|str_to_dict%}                                                                                #custom jinja2 filter
+   {% set position = position|str_to_dict%}                              #custom jinja2 filter
    _CG28                 ; home if not already homed
    G90                   ; absolute positioning
    # below is the Klipper custom function
