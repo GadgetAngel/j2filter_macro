@@ -222,7 +222,7 @@ description: Helper: Repeat a message twice
 variable_flag: 0
 gcode:
     {% set rpt = params.MSG %}
-    M118 {repeater(rpt)}
+    M118 {repeater(rpt)}                #Klipper custom function
 ```
 As you can see the macro has to have the section defined with ``j2filter_macro Macro_Name``.  You use `j2filter_macro` the same way you presently use `gcode_macro`
 
@@ -451,7 +451,7 @@ gcode:
        {% set position = params.DICT %}
        _CG28                 ; home if not already homed
        G90                   ; absolute positioning
-       G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f}    #custom python fucntion call
+       G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f}                                            #Klipper custom function
        {% if not printer.gcode_move.absolute_coordinates %} G91 {% endif %} ; set back to relative
    {% elif params.LIT %}
        {% set position = params.LIT %}
@@ -503,7 +503,7 @@ gcode:
    {% set position = position|str_to_dict%}                                                                                #custom jinja2 filter
    _CG28                 ; home if not already homed
    G90                   ; absolute positioning
-   #G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f}   #custom python function call
+   #G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f}                #Klipper custom function
    G0 X{position.x} Y{position.y} Z{position.z} F{position.f}
    {% if not printer.gcode_move.absolute_coordinates %} G91 {% endif %} ; set back to relative
    _general_Debug msg="delayed_park_dict - exiting"
