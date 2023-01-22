@@ -552,11 +552,14 @@ It's possible to keep this extension up to date with the Moonraker's update mana
 
 ```python
 
-[update_manager client j2filter_macro]
+[update_manager j2filter_macro]
 type: git_repo
 path: ~/j2filter_macro
 origin: https://github.com/GadgetAngel/j2filter_macro.git
+env: ~/klippy-env/bin/python
+requirements: requirements.txt
 install_script: install-j2filter.sh
+is_system_service: False
 managed_services: klipper
 ```
 
