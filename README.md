@@ -59,8 +59,12 @@ Here is the manual install instruction:
 >:point_up: Run the following command:
 ```BASH
 cd ~
+```
+```BASH
 ${KLIPPY_ENV}/pip install -r ${HOME}/requirements.txt
+```
 or
+```BASH
 ~/klippy-env/bin/pip install -r /home/pi/requirements.txt
 ```
 
@@ -71,8 +75,13 @@ Perform the following commands at your Raspberry Pi command prompt:
 1. Install the additional software packages needed on the Raspberry Pi for this extension to work:
 ```BASH
 cd ~
+```
+
+```BASH
 ${KLIPPY_ENV}/pip install -r ${HOME}/requirements.txt
+```
 or
+```BASH
 ~/klippy-env/bin/pip install -r /home/pi/requirements.txt
 ```
 >:point_up: NOTE: Please Be patient, the installation process can take up to 15 minutes.  So let it run for a while.
@@ -81,7 +90,11 @@ or
 2. Install the `j2filter_macro` extension to Klipper, please run the following commands:
 ```BASH
 cd /home/pi
+```
+```BASH
 git clone https://github.com/GadgetAngel/j2filter_macro.git
+```
+```BASH
 ./j2filter_macro/install-j2filter.sh
 ```
 
@@ -496,14 +509,14 @@ The reason I found it awkward was that I needed to translate a string into a pyt
 
 My code ended up looking like the following when using my python code as a Klipper custom function call:
 
-```JAVA
+```python
 {% set position = params.DICT %}
 G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f}
 ```
 
 By using my python function as a custom jinja2 filter I could now write the macro by using the pipe character '|' as follows:
 
-```JAVA
+```python
 {% set position = params.LIT %}
 {% set position = position|str_to_dict %}
 G0 X{position.x} Y{position.y} Z{position.z} F{position.f}
