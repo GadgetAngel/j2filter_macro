@@ -1,35 +1,45 @@
-# Utilize Python Code in your GCode Macros
+# Utilize Python Code in your GCode Macros as Jinja2 Filters
 #
 # Copyright (C) 2022  Michael Carroll <mc999984@gmail.com>
 # Some of this code may have been used, sourced, or referenced from Klipper source code
 #
 # This file may be distributed under the terms of the GNU GPLv3 license.
+#
+# URL Resource: https://github.com/droans/klipper_extras/tree/v0.2/extended_macro
+#
+# add [j2filter_macro <macro_name>] sections to your printer.cfg file; 
+# 
+# you use this the same way you use [gcode_macro <macro_name>] but you
+# will use [j2filter_macro <macro_name>] if your macro contains one of 
+# your custom jinja2 filters in the macro definition area (i.e. after gcode:)
+#     
+#
+# additinal contributions by:
+#
+# Discord List:
+#  droans#3926
+#  GadgetAngel#8701
+#
 
 import traceback, logging, ast, copy
 import jinja2
 import imp
 import os, sys
-from .gcode_macro import (
-    GetStatusWrapper,
-    TemplateWrapper,
-    PrinterGCodeMacro,
-    GCodeMacro
-)
+import gcode_macro
 
 ######################################################################
-# Extended Template handling
+# J2Filter Template handling
 ######################################################################
-
+#
 # Wrapper around a Jinja2 template
 # Inherits TemplateWrapper from gcode_macro.py
-# Only Change is the template context to utilize extended_macro
-
-class ExtendedTemplateWrapper(TemplateWrapper):
+# Only Change is the template context to utilize j2filter_macro
+class J2FiltrTemplateWrapper(gcode_macro.TemplateWrapper):
     def __init__(self, printer, env, name, script):
         self.printer = printer
         self.name = name
         self.gcode = self.printer.lookup_object('gcode')
-        gcode_macro = self.printer.lookup_object('extended_macro')
+        gcode_macro = printer.lookup_object('j2filter_macro')        
         self.create_template_context = gcode_macro.create_template_context
         try:
             self.template = env.from_string(script)
@@ -38,38 +48,37 @@ class ExtendedTemplateWrapper(TemplateWrapper):
                  name, traceback.format_exception_only(type(e), e)[-1])
             logging.exception(msg)
             raise printer.config_error(msg)
-
+            
+######################################################################
+# J2Filter PrinterGCodeMacro (Template handling contiued)
+######################################################################
+#
 # Inherits PrinterGCodeMacro from gcode_macro.py
 # Code added to utilize 
-class ExtendedPrinterGCodeMacro(PrinterGCodeMacro, object):     #Dummy `object` required due to the Python 2 requirement for using super()
-    def __init__(self, config):
-        super(ExtendedPrinterGCodeMacro, self).__init__(config)
-        config = self.printer.load_object(config, 'extended_template')   #load config for extended_template.py
-        
-        jinja2func = config.J2func
-        jinja2filter = config.J2filter
-        
-        for name, func in config.Functions.items():
+class J2FiltrPrinterGCodeMacro(gcode_macro.PrinterGCodeMacro):     
+    def __init__(self, config):        
+        gcode_macro.PrinterGCodeMacro.__init__(self, config)       
+        j2filter_template_obj = self.printer.load_object(config, 'j2filter_template')   #load object from j2filter_template.py file
+        jinja2func = j2filter_template_obj.J2func
+        jinja2filter = j2filter_template_obj.J2filter
+        for name, filtr in j2filter_template_obj.Filters.items():
             if jinja2func == True:
-                jinja_func = {name:func}
+                jinja_func = {name:filtr}
                 self.env.globals.update(**jinja_func)
-                pass
             if jinja2filter == True:
-                # enxtend jinja2 with a custom filter called "name" from python function called "func" 
-                self.env.filters[name] = func
-
+                # enxtend jinja2 with a custom filter called "name" from python function called "filtr" 
+                self.env.filters[name] = filtr
 
 def load_config(config):
-    return ExtendedPrinterGCodeMacro(config)
+    return J2FiltrPrinterGCodeMacro(config)
 
 ######################################################################
-# Extended GCode macro
+# J2Filter GCode macro
 ######################################################################
-
+#
 # Inherits GCodeMacro from gcode_macro.py
 # Only changes the template objects
-
-class ExtendedGCodeMacro(GCodeMacro):
+class J2FiltrGCodeMacro(gcode_macro.GCodeMacro):
     def __init__(self, config):
         if len(config.get_name().split()) > 2:
             raise config.error(
@@ -78,7 +87,7 @@ class ExtendedGCodeMacro(GCodeMacro):
         name = config.get_name().split()[1]
         self.alias = name.upper()
         self.printer = printer = config.get_printer()
-        gcode_macro = printer.load_object(config, 'extended_macro')
+        gcode_macro = printer.load_object(config, 'j2filter_macro')
         self.template = gcode_macro.load_template(config, 'gcode')
         self.gcode = printer.lookup_object('gcode')
         self.rename_existing = config.get("rename_existing", None)
@@ -109,6 +118,5 @@ class ExtendedGCodeMacro(GCodeMacro):
                     "Option '%s' in section '%s' is not a valid literal" % (
                         option, config.get_name()))
 
-
 def load_config_prefix(config):
-    return ExtendedGCodeMacro(config)
+    return J2FiltrGCodeMacro(config)
