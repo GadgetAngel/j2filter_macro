@@ -238,7 +238,7 @@ With delayed Gcode the macro name should be in lower case lettering.  Also, you 
 
 ### **Example2 Usage: An Example of using your python code as a Custom Jinja2 Filter**
 
-First you must create the `[j2filter_template]` section in your printer.cfg file so Klipper knows to load the `j2filter_template.py` file and include it into the Klipper code running on your Raspberry Pi.
+First, you must create the `[j2filter_template]` section in your printer.cfg file so Klipper knows to load the `j2filter_template.py` file and include it into the Klipper code running on your Raspberry Pi.
 
 Here is the example2 folder's `[j2filter_template]` section definition (it is located in the file: `J2FILTER_TEMPLATE.cfg`):
 ```python
@@ -258,14 +258,14 @@ jinja2_filter: True
 
 ```
 
-In the example2 folder there are two example python code files: `string_to_dict.py` and `strjson_to_dict.py`. Example2 contains my Python coded that I plan to use as custom jinja2 filters.  The python code are called: `string_to_dict(dic_string):` and `strjson_to_dict(dict_string):`.  If you look into `filters_config.yaml` file, you will see the following:
+In the example2 folder there are two example python code files: `string_to_dict.py` and `strjson_to_dict.py`. Example2 contains my Python code that I plan to use as custom jinja2 filters.  The python code are called: `string_to_dict(dic_string):` and `strjson_to_dict(dict_string):`.  If you look into `filters_config.yaml` file, you will see the following:
 ```YAML
 filters:
   str_json_todict:                                                                   # The name which will be used in the GCode to call the function. Must be unique.
-    path: /home/pi/klipper_config/ACTIVE/CONFIG/KLIPPER_FILTERS/strjson_to_dict.py # Location of Python script. Must be an absolute path
+    path: /home/pi/klipper_config/ACTIVE/CONFIG/KLIPPER_FILTERS/strjson_to_dict.py  # Location of Python script. Must be an absolute path
     filter: strjson_to_dict                                                          # The actual name of the Python function
   str_to_dict:                                                                       # The name which will be used in the GCode to call the function. Must be unique.
-    path: /home/pi/klipper_config/ACTIVE/CONFIG/KLIPPER_FILTERS/string_to_dict.py  # Location of Python script. Must be an absolute path
+    path: /home/pi/klipper_config/ACTIVE/CONFIG/KLIPPER_FILTERS/string_to_dict.py   # Location of Python script. Must be an absolute path
     filter: string_to_dict                                                           # The actual name of the Python function
 ```
 The above words in the `YAML` file **must NOT** be changed:
@@ -342,7 +342,7 @@ Now you need to use the above python code files inside a Klipper macro.  Example
 
 Example2 uses a regular `gcode_macro` file to call a `j2filter_macro` section.  The calling macro's name is `TEST_CALL_PARK` which calls the `j2filter_macro PARK_DICT` named `PARK_DICT`.
 
-`PARK_DICT` will accept a string that has the X, Y, Z park coordinates in a dictionary format.  But Klipper only sends string to other macros, unless you use a global variable area.  I want to see if I could get a Klipper macro to accept a dictionary variable as a parameter on the command line.  To accomplish this I need a custom jinja2 filter, so I can convert the string back into a python dictionary object.  I could not find any other way of performing this task.
+`PARK_DICT` will accept a string that has the X, Y, Z, F park coordinates and Feed rate in a python dictionary object.  But Klipper only sends strings to other macros (via the commandline), unless you use a global variable area.  I want to see if I could get a Klipper macro to accept a python dictionary variable as a parameter on the command line.  To accomplish this I needed a custom jinja2 filter, so I could convert the string back into a python dictionary object.  I could not find any other way of performing this task.
 
 So I wrote two different ways of converting a string into a python dictionary object.  `strjson_to_dict.py` uses a JSON library call to convert the string.  The problem with this is if you use single quotes around the key name the JSON library will not consider the string a valid JSON string.
 
