@@ -15,7 +15,7 @@ If you use your python code as a filter inside a Klipper macro, let's call it a 
 * When `[j2filter_macro]` section appears in your printer.cfg file the ability to add your own python code to
  a Klipper macro will be available.
 
-* Allow the user of custom Python code in your Klipper macros by defining the `filters` parameter in a YAML config file.
+* Allow the use of custom Python code in your Klipper macros by defining the `filters` parameter in a YAML config file.
 
 * By default, includes many additional modules and functions. Look at the end of this README file, for more information.
 
