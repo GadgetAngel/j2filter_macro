@@ -109,7 +109,7 @@ git clone https://github.com/GadgetAngel/j2filter_macro.git
 1. In your Klipper config, add the following section:
 ```python
 [j2filter_template]
-path:                 - the path to your yaml file (the path to the python code and the name you will be using inside klipper) Please ensure you use `/` in the path. DO NOT use Windows  ``v\v\v`` in your path parameter.
+path:                 - the path to your yaml file (the path to the python code and the name you will be using inside klipper) Please ensure you use the UNIX forward (/) in the path option. DO NOT use Window's backward slash (\) in your path parameter.
 jinja2_function:      - (True,False) set to True if you want to use the python code as a function call and invoke by using two curly braces, otherwise set to False; default is True
 jinja2_filter:        - (True,False) set to True if you want to use the python code as a filter and invoke with the '|' character, otherwise set to False; default is True
 
