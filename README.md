@@ -193,7 +193,7 @@ def repeat_back(rept):
 
 Now you need to use the above python code inside a Klipper macro.  Example1 shows you how to use your python code as a Klipper custom function.
 
-Here is the example2 Klipper macro definition (located in file: `klipper_functions.cfg`):
+Here is the example1 Klipper macro definition (located in file: `klipper_functions.cfg`):
 ```python
 #.................................................................................................................
 # REPEAT_MSG - optional paramters: MSB{string} / Usage: REPEAT_MSG MSG="Kick "
