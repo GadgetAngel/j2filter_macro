@@ -379,27 +379,27 @@ Here is the example2 `TEST_CALL_PARK` Klipper macro definition:
 description: Helper: Park head depending on variable DICT parameter which is a python dictionary variable
 gcode:
    _general_Debug msg="TEST_CALL_PARK - entering"
-    {% set dict_string = {"x": 150.0, "y": 20.0, "z": 50.0, "f": 4000.0} %}
+    {% set dict_string = '{"x": 150.0, "y": 20.0, "z": 50.0, "f": 4000.0}' %}
     PARK_DICT DICT='{dict_string}'
 
-    PARK_DICT DICT='{"x": 250, "y": 50, "z": 70, "f": 4000.0}'
+    PARK_DICT DICT='{{"x": 250, "y": 50, "z": 70, "f": 4000.0}}'
 
-    {% set dict_string = {'x': 150.0, 'y': 20.0, 'z': 50.0, 'f': 4000.0} %}
+    {% set dict_string = "{'x': 150.0, 'y': 20.0, 'z': 50.0, 'f': 4000.0}" %}
     PARK_DICT DICT="{dict_string}"
 
-    PARK_DICT DICT="{'x': 250, 'y': 50, 'z': 70, 'f': 4000.0}"
+    PARK_DICT DICT="{{'x': 250, 'y': 50, 'z': 70, 'f': 4000.0}}"
 
 #==================
 
-    {% set dict_string = {"x": 150.0, "y": 20.0, "z": 50.0, "f": 4000.0} %}
+    {% set dict_string = '{"x": 150.0, "y": 20.0, "z": 50.0, "f": 4000.0}' %}
     PARK_DICT LIT='{dict_string}'
 
-    PARK_DICT LIT='{"x": 250, "y": 50, "z": 70, "f": 4000.0}'
+    PARK_DICT LIT='{{"x": 250, "y": 50, "z": 70, "f": 4000.0}}'
 
-    {% set dict_string = {'x': 150.0, 'y': 20.0, 'z': 50.0, 'f': 4000.0} %}
+    {% set dict_string = "{'x': 150.0, 'y': 20.0, 'z': 50.0, 'f': 4000.0}" %}
     PARK_DICT LIT="{dict_string}"
 
-    PARK_DICT LIT="{'x': 250, 'y': 50, 'z': 70, 'f': 4000.0}"
+    PARK_DICT LIT="{{'x': 250, 'y': 50, 'z': 70, 'f': 4000.0}}"
    _general_Debug msg="TEST_CALL_PARK - exiting"
 ```
 
@@ -503,7 +503,7 @@ gcode:
     _general_Debug msg="delayed_park_dict - entering"
    #{% set position = '{"x": 150.0, "y": 20.0, "z": 50.0, "f": 4000.0}' %}
    {% set position = "{'x': 250, 'y': 50, 'z': 70, 'f': 4000.0}" %}
-   {% set position = position|str_to_dict%}                              #custom jinja2 filter
+   {% set position = position|str_to_dict %}                              #custom jinja2 filter
    _CG28                 ; home if not already homed
    G90                   ; absolute positioning
    # below is the Klipper custom function
@@ -517,7 +517,7 @@ gcode:
 
 #### Addtional notes on j2filter_macro extension
 
-When defining the macro, use `[j2filter_macro <macro_name_here>]` as the section name instead of `gcode_macro`. 
+When defining the macro, use `[j2filter_macro <macro_name_here>]` as the section name instead of `gcode_macro`.
 
 When define the delayed macro, use `[delayed_j2filter <macro_name_here>]` as the section name instead of `delayed_gcode`.
 
@@ -532,7 +532,7 @@ My code ended up looking like the following when using my python code as a Klipp
 ```python
 {% set position = params.DICT %}
 # below is the Klipper custom function
-G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f} 
+G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f}
 ```
 
 By using my python function as a custom jinja2 filter I could now write the macro by using the pipe character '|' as follows:
