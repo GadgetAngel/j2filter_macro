@@ -453,7 +453,8 @@ gcode:
        {% set position = params.DICT %}
        _CG28                 ; home if not already homed
        G90                   ; absolute positioning
-       G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f}                                            #Klipper custom function
+       # below is the Klipper custom function
+       G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f}
        {% if not printer.gcode_move.absolute_coordinates %} G91 {% endif %} ; set back to relative
    {% elif params.LIT %}
        {% set position = params.LIT %}
@@ -505,7 +506,8 @@ gcode:
    {% set position = position|str_to_dict%}                                                                                #custom jinja2 filter
    _CG28                 ; home if not already homed
    G90                   ; absolute positioning
-   #G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f}                #Klipper custom function
+   # below is the Klipper custom function
+   #G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f}
    G0 X{position.x} Y{position.y} Z{position.z} F{position.f}
    {% if not printer.gcode_move.absolute_coordinates %} G91 {% endif %} ; set back to relative
    _general_Debug msg="delayed_park_dict - exiting"
@@ -513,7 +515,13 @@ gcode:
 
 ---
 
-When defining the macro, use `[j2filter_macro <macro_name_here>]` as the section name instead of `gcode_macro`. To use your python code, you will wrap the name of your python code function between two curly brackets (`{gcode_function_name_goes_here}`) if you want to use your python code as a Klipper custom function call.
+#### Addtional notes on j2filter_macro extension
+
+When defining the macro, use `[j2filter_macro <macro_name_here>]` as the section name instead of `gcode_macro`. 
+
+When define the delayed macro, use `[delayed_j2filter <macro_name_here>]` as the section name instead of `delayed_gcode`.
+
+To use your python code as a Klipper custom function, you will wrap the function name of your python code between two curly brackets (`{gcode_function_name_goes_here}`).
 
 I found that when using my python code as a Klipper custom function call was awkward.  I prefer to use my python code as a jinja2 custom filter.
 
@@ -523,14 +531,15 @@ My code ended up looking like the following when using my python code as a Klipp
 
 ```python
 {% set position = params.DICT %}
-G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f}
+# below is the Klipper custom function
+G0 X{(str_to_dict(position)).x} Y{(str_to_dict(position)).y} Z{(str_to_dict(position)).z} F{(str_to_dict(position)).f} 
 ```
 
 By using my python function as a custom jinja2 filter I could now write the macro by using the pipe character '|' as follows:
 
 ```python
 {% set position = params.LIT %}
-{% set position = position|str_to_dict %}
+{% set position = position|str_to_dict %}   #custom jinja2 filter
 G0 X{position.x} Y{position.y} Z{position.z} F{position.f}
 ```
 
