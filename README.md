@@ -137,7 +137,12 @@ The reason for the default settings is to ensure your 3D printer will boot back 
 1. Create your Python script(s) with the function(s) you intend to use.
 2. Create a filter configuration file using `example1/klipper_functions/function_config.yaml` or `example2/KLIPPER_FILTERS/filters_config.yaml` as references. YAML is the allowed schema. The extension must be `yml` or `yaml`
 3. In the `[j2filter_template]` section of your Kipper config, add the option `path:` with the value being the location of where you saved the config YAML file.
-4. In the `[j2filter_template]` section of your Kipper config, add the option `jinja2_function:` with the value being `True` or `False` (the case of the letters does matter here).  If `jinja2_function` is set to `True` then the python function defined in the file is to be used as a Klipper custom function with parameters in your Klipper macro.  If `jinja2_function` is set to `False` then the python function defined in the file is to be used as a custom jinja2 filter on the right-hand side of the pipe symbol (|).
+4. In the `[j2filter_template]` section of your Kipper config, add the option `jinja2_function:` with the value being `True` or `False` (the case of the letters does matter here).  If `jinja2_function:` is set to `True` then the python function defined in the file is to be used as a Klipper custom function (with parameters) in your Klipper macro.  If `jinja2_function:` is set to `False` then the python function defined in the file is not to be used as a Klipper custom function.
+5. In the `[j2filter_template]` section of your Kipper config, add the option `jinja2_filter:` with the value being `True` or `False` (the case of the letters does matter here).  If `jinja2_filter:` is set to `True` then the python function defined in the file is to be used as a custom JINJA2 filter in your Klipper macro.  If `jinja2_filter:` is set to `False` then the python function defined in the file is not to be used as custom JINJA2 filter.
+
+Yes, you can have the same function used as both a Klipper custom function and a custom JINJA2 filter.
+
+:bulb: It is the user's responsibility not to overwrite predefined Jinja2 Filters!  There is nothing to check if the user is trying to create a filter name that already exists in Jinja2 unless it is built into the Jinja2 language already.
 
 ---
 **Example1 Usage: An Example of using your python code as a Klipper custom function**
