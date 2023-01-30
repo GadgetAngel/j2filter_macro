@@ -20,7 +20,7 @@
 #
 
 import logging
-import delayed_gcode
+from .delayed_gcode import DelayedGcode as delayed_gcode_DelayedGcode
 
 ######################################################################
 # J2Filter Delayed GCode macro
@@ -28,7 +28,7 @@ import delayed_gcode
 #
 # Inherits DelayedGcode from delayed_gcode.py
 # Only changes the template objects
-class J2FiltrDelayedGcode(delayed_gcode.DelayedGcode):
+class J2FiltrDelayedGcode(delayed_gcode_DelayedGcode):
     def __init__(self, config):
         self.printer = config.get_printer()
         self.reactor = self.printer.get_reactor()
